@@ -1,15 +1,18 @@
 .piano {
   height: 45vh;
+  position: relative;
 }
 
 .white-keys {
   height: 100%;
   width: 100%;
+  position: absolute;
 }
 
 .black-keys {
   height: 70%;
   width: 100%;
+  position: absolute;
 }
 
 .white-keys .white-key {

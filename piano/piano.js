@@ -40,12 +40,12 @@ All piano keys are indexed from 1 to whatever. Not 0
 
     (function() {
       let blackKeyNumber = 1;
-      for (let i = 1; i <= this.blackKeysArray; i++) {
+      for (let i = 1; i <= this.blackKeysArray.length; i++) {
         if (this.blackKeysArray[i] === 0) {
           continue;
         }
         const numberOfWhites = i-1;
-        blackKeyMake.call(this, pianoElement, blackKeyNumber, numberOfWhites+blackKeyNumber);
+        blackKeyMake.call(this, blackKeyNumber, numberOfWhites+blackKeyNumber, whiteKeysAmount);
         blackKeyNumber++;
       }
     }).call(this);
@@ -69,32 +69,34 @@ All piano keys are indexed from 1 to whatever. Not 0
 
   function addPianoKeyEventListeners() {
     const piano = this;
-    for (whiteKey of this.whiteKeysWrapper.children) {
-      whiteKey.addEventListener('mousedown', function(event) {
-        if (mouseDown) {return false;}
-        mouseDown = true;
-        piano._keyDown(this);
-        return false;
-      });
-      whiteKey.addEventListener('mouseup', function(event) {
-        if (!mouseDown) {return false;}
-        mouseDown = false;
-        piano._keyUp(this);
-        return false;
-      });
-      whiteKey.addEventListener('mouseout', function(event) {
-        if (!mouseDown) {return false;}
-        piano._keyUp(this);
-        return false;
-      });
-      whiteKey.addEventListener('mouseover', function(event) {
-        if (!mouseDown) {return false;}
-        piano._keyDown(this);
-        return false;
-      });
-      whiteKey.addEventListener('click', function(event) {
-      });
+    function addEventListenersToKeys(keys) {
+      for (key of keys) {
+        key.addEventListener('mousedown', function(event) {
+          if (mouseDown) {return false;}
+          mouseDown = true;
+          piano._keyDown(this);
+          return false;
+        });
+        key.addEventListener('mouseup', function(event) {
+          if (!mouseDown) {return false;}
+          mouseDown = false;
+          piano._keyUp(this);
+          return false;
+        });
+        key.addEventListener('mouseout', function(event) {
+          if (!mouseDown) {return false;}
+          piano._keyUp(this);
+          return false;
+        });
+        key.addEventListener('mouseover', function(event) {
+          if (!mouseDown) {return false;}
+          piano._keyDown(this);
+          return false;
+        });
+      }
     }
+    addEventListenersToKeys(this.whiteKeysWrapper.children);
+    addEventListenersToKeys(this.blackKeysWrapper.children);
   }
 
 
@@ -127,10 +129,14 @@ All piano keys are indexed from 1 to whatever. Not 0
     return key;
   }
 
-  function blackKeyMake(blackKeyNumber, pianoKeyNumber) {
+  function blackKeyMake(blackKeyNumber, pianoKeyNumber, totalWhiteKeys) {
+    console.log("blackKeyMake");
     const key = document.createElement('div');
-    key.classList.add('piano-key', classNames.blackKey, 'black-key-'+whiteKeyNumber, 'piano-key-'+pianoKeyNumber);
+    key.classList.add('piano-key', classNames.blackKey, 'black-key-'+blackKeyNumber, 'piano-key-'+pianoKeyNumber);
     this.blackKeysWrapper.appendChild(key);
+    const keyWidthPercent = 100.0/totalWhiteKeys/1.5;
+    key.style.cssText = `width: ${keyWidthPercent}%`;
+    return key;
   }
 
   ///////// Helpers
