@@ -79,6 +79,7 @@ All piano keys are indexed from 1 to whatever. Not 0
     function addEventListenersToKeys(keys) {
       for (key of keys) {
         key.addEventListener('mousedown', function(event) {
+          console.log("mouse down");
           if (mouseDown) {return false;}
           mouseDown = true;
           piano._keyDown(this);

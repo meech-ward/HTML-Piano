@@ -7,16 +7,20 @@
   height: 100%;
   width: 100%;
   position: absolute;
+  pointer-events: none;
 }
 
 .black-keys {
   height: 70%;
   width: 100%;
   position: absolute;
+  pointer-events: none;
 }
 
 .black-key-blank, .piano-key {
   float: left;
+  position: relative;
+  pointer-events: auto;
 }
 
 .white-keys .white-key {
