@@ -1,0 +1,19 @@
+.white-keys .white-key {
+  float: left;
+  background-image: url('assets/white-sprite.png');
+  background-repeat: no-repeat;
+  background-size: 300% 100%;
+  height: 400px;
+}
+
+.white-keys .white-key.key-up {
+  background-position: 0% 0%;
+}
+
+.white-keys .white-key.key-down {
+  background-position: 50% 0%;
+}
+
+.white-keys .white-key.key-highlighted {
+  background-position: 100% 0%;
+}

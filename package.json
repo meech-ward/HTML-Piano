@@ -1,0 +1,19 @@
+{
+  "name": "piano",
+  "version": "1.0.0",
+  "description": "",
+  "main": "example.js",
+  "directories": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.0.1"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "author": "",
+  "license": "ISC"
+}
