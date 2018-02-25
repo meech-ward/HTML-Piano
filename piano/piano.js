@@ -6,9 +6,13 @@
 let Piano;
 const classNames = {
   whiteKey: 'white-key',
+  blackKey: 'black-key',
   keyUp: 'key-up',
   keyDown: 'key-down',
-  keyHighlighted: 'key-highlighted'
+  keyHighlighted: 'key-highlighted',
+  piano: 'piano',
+  whiteKeys: 'white-keys',
+  blackKeys: 'black-keys'
 };
 
 /*
@@ -24,12 +28,27 @@ All piano keys are indexed from 1 to whatever. Not 0
   let mouseDown = false;
 
   Piano = function(whiteKeysAmount, blackKeysLayout) {
-    const pianoElement = pianoElementMake();
+    const pianoElement = pianoElementMake.call(this);
     this.blackKeysArray = arrayFromBlackKeys(blackKeysLayout);
-    for (let i = 1; i <= whiteKeysAmount; i++) {
-      const pianoKeyNumber = pianoKeyNumberFromWhiteKeyNumber(i, this.blackKeysArray);
-      whiteKeyMake(pianoElement, i, pianoKeyNumber, whiteKeysAmount);
-    }
+
+    (function() {
+      for (let i = 1; i <= whiteKeysAmount; i++) {
+        const pianoKeyNumber = pianoKeyNumberFromWhiteKeyNumber(i, this.blackKeysArray);
+        whiteKeyMake.call(this, i, pianoKeyNumber, whiteKeysAmount);
+      }
+    }).call(this);
+
+    (function() {
+      let blackKeyNumber = 1;
+      for (let i = 1; i <= this.blackKeysArray; i++) {
+        if (this.blackKeysArray[i] === 0) {
+          continue;
+        }
+        const numberOfWhites = i-1;
+        blackKeyMake.call(this, pianoElement, blackKeyNumber, numberOfWhites+blackKeyNumber);
+        blackKeyNumber++;
+      }
+    }).call(this);
 
     this.HTML = pianoElement;
     this.keyUp = this.keyDown = () => {};
@@ -43,14 +62,14 @@ All piano keys are indexed from 1 to whatever. Not 0
       key.classList.remove(classNames.keyDown);
       this.keyUp(keyNumber(key));
     }
-    addPianoKeyEventListeners.bind(this)(pianoElement);
+    addPianoKeyEventListeners.call(this);
   }
 
   ////////// Event Listeners
 
-  function addPianoKeyEventListeners(pianoElement) {
+  function addPianoKeyEventListeners() {
     const piano = this;
-    for (whiteKey of pianoElement.whiteKeysWrapper.children) {
+    for (whiteKey of this.whiteKeysWrapper.children) {
       whiteKey.addEventListener('mousedown', function(event) {
         if (mouseDown) {return false;}
         mouseDown = true;
@@ -84,34 +103,34 @@ All piano keys are indexed from 1 to whatever. Not 0
 
   function pianoElementMake() {
     const pianoElement = document.createElement('div');
-    pianoElement.classList.add('piano');
+    pianoElement.classList.add(classNames.piano);
 
     const whiteKeysWrapper = document.createElement('div');
-    whiteKeysWrapper.classList.add('white-keys');
+    whiteKeysWrapper.classList.add(classNames.whiteKeys);
     pianoElement.appendChild(whiteKeysWrapper);
-    pianoElement.whiteKeysWrapper = whiteKeysWrapper
+    this.whiteKeysWrapper = whiteKeysWrapper
     
     const blackKeysWrapper = document.createElement('div');
-    blackKeysWrapper.classList.add('black-keys');
+    blackKeysWrapper.classList.add(classNames.blackKeys);
     pianoElement.appendChild(blackKeysWrapper);
-    pianoElement.blackKeysWrapper = blackKeysWrapper;
+    this.blackKeysWrapper = blackKeysWrapper;
 
     return pianoElement;
   }
 
-  function whiteKeyMake(pianoElement, whiteKeyNumber, pianoKeyNumber, totalWhiteKeys) {
+  function whiteKeyMake(whiteKeyNumber, pianoKeyNumber, totalWhiteKeys) {
     const key = document.createElement('div');
     key.classList.add('piano-key', classNames.whiteKey, classNames.keyUp, 'white-key-'+whiteKeyNumber, 'piano-key-'+pianoKeyNumber);
-    pianoElement.whiteKeysWrapper.appendChild(key);
+    this.whiteKeysWrapper.appendChild(key);
     const keyWidthPercent = 100.0/totalWhiteKeys;
     key.style.cssText = `width: ${keyWidthPercent}%`;
     return key;
   }
 
-  function blackKeyMake(pianoElement, whiteKeyNumber, pianoKeyNumber) {
+  function blackKeyMake(blackKeyNumber, pianoKeyNumber) {
     const key = document.createElement('div');
-    key.classList.add('piano-key', classNames.whiteKey, 'white-key-'+whiteKeyNumber, 'piano-key-'+pianoKeyNumber);
-    pianoElement.whiteKeysWrapper.appendChild(key);
+    key.classList.add('piano-key', classNames.blackKey, 'black-key-'+whiteKeyNumber, 'piano-key-'+pianoKeyNumber);
+    this.blackKeysWrapper.appendChild(key);
   }
 
   ///////// Helpers
@@ -130,6 +149,7 @@ All piano keys are indexed from 1 to whatever. Not 0
   exports.pianoKeyNumberFromWhiteKeyNumber = pianoKeyNumberFromWhiteKeyNumber;
 
   function pianoKeyNumberFromBlackKeyNumber(blackKeyNumber, blackKeysArray) {
+
   }
   exports.pianoKeyNumberFromBlackKeyNumber = pianoKeyNumberFromBlackKeyNumber;
 

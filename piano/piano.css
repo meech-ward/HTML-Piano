@@ -1,19 +1,41 @@
+.piano {
+  height: 45vh;
+}
+
+.white-keys {
+  height: 100%;
+  width: 100%;
+}
+
+.black-keys {
+  height: 70%;
+  width: 100%;
+}
+
 .white-keys .white-key {
   float: left;
   background-image: url('assets/white-sprite.png');
   background-repeat: no-repeat;
   background-size: 300% 100%;
-  height: 400px;
+  height: 100%;
 }
 
-.white-keys .white-key.key-up {
+.black-keys .black-key {
+  float: left;
+  background-image: url('assets/black-sprite.png');
+  background-repeat: no-repeat;
+  background-size: 300% 100%;
+  height: 100%;
+}
+
+.white-keys .white-key.key-up, .black-keys .black-key.key-up {
   background-position: 0% 0%;
 }
 
-.white-keys .white-key.key-down {
+.white-keys .white-key.key-down, .black-keys .black-key.key-down {
   background-position: 50% 0%;
 }
 
-.white-keys .white-key.key-highlighted {
+.white-keys .white-key.key-highlighted, .black-keys .black-key.key-highlighted {
   background-position: 100% 0%;
 }
