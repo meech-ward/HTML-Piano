@@ -19,9 +19,6 @@ const classNames = {
 All piano keys are indexed from 1 to whatever. Not 0
 */
 
-
-
-////// Piano Key Creation
 (function(exports) {
 
   // True if the mouse is currently down
@@ -31,22 +28,32 @@ All piano keys are indexed from 1 to whatever. Not 0
     const pianoElement = pianoElementMake.call(this);
     this.blackKeysArray = arrayFromBlackKeys(blackKeysLayout);
 
+    const blackKeyWidthPercent = 100.0/whiteKeysAmount/1.5;
+    const whiteKeyWidthPercent = 100.0/whiteKeysAmount;
+
     (function() {
       for (let i = 1; i <= whiteKeysAmount; i++) {
         const pianoKeyNumber = pianoKeyNumberFromWhiteKeyNumber(i, this.blackKeysArray);
-        whiteKeyMake.call(this, i, pianoKeyNumber, whiteKeysAmount);
+        whiteKeyMake.call(this, i, whiteKeyWidthPercent, pianoKeyNumber, whiteKeysAmount);
       }
     }).call(this);
 
     (function() {
       let blackKeyNumber = 1;
-      for (let i = 1; i <= this.blackKeysArray.length; i++) {
+      
+      let numberOfWhitesSinceLastBlack = 0;
+      let isFirst = true;
+      for (let i = 0; i <= this.blackKeysArray.length-1; i++) {
         if (this.blackKeysArray[i] === 0) {
+          numberOfWhitesSinceLastBlack++;
           continue;
         }
-        const numberOfWhites = i-1;
-        blackKeyMake.call(this, blackKeyNumber, numberOfWhites+blackKeyNumber, whiteKeysAmount);
+        blackBlankMake.call(this, numberOfWhitesSinceLastBlack, blackKeyWidthPercent, whiteKeyWidthPercent, isFirst);
+        const numberOfWhites = i;
+        blackKeyMake.call(this, blackKeyNumber, blackKeyWidthPercent, numberOfWhites+blackKeyNumber, whiteKeysAmount);
         blackKeyNumber++;
+        numberOfWhitesSinceLastBlack = 0;
+        isFirst = false;
       }
     }).call(this);
 
@@ -75,31 +82,29 @@ All piano keys are indexed from 1 to whatever. Not 0
           if (mouseDown) {return false;}
           mouseDown = true;
           piano._keyDown(this);
-          return false;
+          // return false;
         });
         key.addEventListener('mouseup', function(event) {
           if (!mouseDown) {return false;}
           mouseDown = false;
           piano._keyUp(this);
-          return false;
+          // return false;
         });
         key.addEventListener('mouseout', function(event) {
           if (!mouseDown) {return false;}
           piano._keyUp(this);
-          return false;
+          // return false;
         });
         key.addEventListener('mouseover', function(event) {
           if (!mouseDown) {return false;}
           piano._keyDown(this);
-          return false;
+          // return false;
         });
       }
     }
     addEventListenersToKeys(this.whiteKeysWrapper.children);
     addEventListenersToKeys(this.blackKeysWrapper.children);
   }
-
-
 
   ////////// Element Creation
 
@@ -120,27 +125,41 @@ All piano keys are indexed from 1 to whatever. Not 0
     return pianoElement;
   }
 
-  function whiteKeyMake(whiteKeyNumber, pianoKeyNumber, totalWhiteKeys) {
+  function whiteKeyMake(whiteKeyNumber, keyWidthPercent, pianoKeyNumber, totalWhiteKeys) {
     const key = document.createElement('div');
     key.classList.add('piano-key', classNames.whiteKey, classNames.keyUp, 'white-key-'+whiteKeyNumber, 'piano-key-'+pianoKeyNumber);
     this.whiteKeysWrapper.appendChild(key);
-    const keyWidthPercent = 100.0/totalWhiteKeys;
     key.style.cssText = `width: ${keyWidthPercent}%`;
     return key;
   }
 
-  function blackKeyMake(blackKeyNumber, pianoKeyNumber, totalWhiteKeys) {
-    console.log("blackKeyMake");
+  function blackKeyMake(blackKeyNumber, keyWidthPercent, pianoKeyNumber, totalWhiteKeys) {
     const key = document.createElement('div');
     key.classList.add('piano-key', classNames.blackKey, 'black-key-'+blackKeyNumber, 'piano-key-'+pianoKeyNumber);
     this.blackKeysWrapper.appendChild(key);
-    const keyWidthPercent = 100.0/totalWhiteKeys/1.5;
     key.style.cssText = `width: ${keyWidthPercent}%`;
     return key;
   }
+  function blackBlankMake(numberOfWhitesSinceLastBlack, blackKeyWidthPercent, whiteKeyWidthPercent, isFirst = false) {
+    const blank = document.createElement('div');
+    blank.classList.add('black-key-blank');
+    this.blackKeysWrapper.appendChild(blank);
+
+    const blankWidthPercent = isFirst ? whiteKeyWidthPercent-(blackKeyWidthPercent/2.0) : whiteKeyWidthPercent-blackKeyWidthPercent;
+    if (isFirst) {
+      numberOfWhitesSinceLastBlack--;
+    }
+
+    let currentWidthPercent = blankWidthPercent;
+    for (let i = 0; i < numberOfWhitesSinceLastBlack; i++) {
+      currentWidthPercent += whiteKeyWidthPercent;
+    }
+
+    blank.style.cssText = `width: ${currentWidthPercent}%; height: 10px;`;
+    return blank;
+  }
 
   ///////// Helpers
-
 
   function pianoKeyNumberFromWhiteKeyNumber(whiteKeyNumber = 0, blackKeysArray = []) {
     // 5 would be 8 because 3 black keys are there before 5

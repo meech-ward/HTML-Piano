@@ -15,8 +15,11 @@
   position: absolute;
 }
 
-.white-keys .white-key {
+.black-key-blank, .piano-key {
   float: left;
+}
+
+.white-keys .white-key {
   background-image: url('assets/white-sprite.png');
   background-repeat: no-repeat;
   background-size: 300% 100%;
@@ -24,7 +27,6 @@
 }
 
 .black-keys .black-key {
-  float: left;
   background-image: url('assets/black-sprite.png');
   background-repeat: no-repeat;
   background-size: 300% 100%;
