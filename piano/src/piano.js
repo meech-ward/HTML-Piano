@@ -13,8 +13,7 @@ let pianoObj = {
 
 function newPiano(whiteKeysAmount, blackKeysLayout) {
   const piano = Object.create(pianoObj);
-  const pianoElement = pianoDOM.pianoElementMake.call(pianoObj);
-  piano.HTML = pianoElement;
+  piano.HTML = pianoDOM.pianoElementMake.call(pianoObj);
 
   piano.blackKeysArray = pianoUtilities.arrayFromBlackKeys(blackKeysLayout);
 
