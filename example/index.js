@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
       {visible: true, amount: 3},
       {visible: false, amount: 1},
     ];
-    const piano = new Piano(whiteKeys, blackKeys);
+    const piano = newPiano(whiteKeys, blackKeys);
 
     piano.keyDown = (keyNumber) => {
       console.log("key down", keyNumber);
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
       {visible: false, amount: 1},
       {visible: true, amount: 3}
     ];
-    const piano = new Piano(whiteKeys, blackKeys);
+    const piano = newPiano(whiteKeys, blackKeys);
 
     piano.keyDown = (keyNumber) => {
       console.log("key down", keyNumber);
