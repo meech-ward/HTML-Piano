@@ -23,6 +23,15 @@
   pointer-events: auto;
 }
 
+.piano-key p {
+  width: 100%;
+  font-family: arial, sans-serif;
+  font-size: 20px;
+  text-align: center;
+  position: absolute; 
+  bottom: 0;
+}
+
 .white-keys .white-key {
   background-image: url('assets/white-sprite.png');
   background-repeat: no-repeat;
@@ -30,11 +39,19 @@
   height: 100%;
 }
 
+.white-keys .white-key p {
+  color: black;
+}
+
 .black-keys .black-key {
   background-image: url('assets/black-sprite.png');
   background-repeat: no-repeat;
   background-size: 300% 100%;
   height: 100%;
+}
+
+.black-keys .black-key p {
+  color: white;
 }
 
 .white-keys .white-key.key-up, .black-keys .black-key.key-up {
