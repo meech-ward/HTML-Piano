@@ -1,7 +1,7 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const piano = require('../piano/piano');
+const piano = require('../piano/src/piano-utilities');
 
 describe("piano", function() {
   describe('#keyNumber', () => {
