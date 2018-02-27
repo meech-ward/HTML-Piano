@@ -21,7 +21,7 @@ exports.pianoElementMake = pianoElementMake;
 
 function whiteKeyMake(whiteKeyNumber, keyWidthPercent, pianoKeyNumber, totalWhiteKeys) {
   const key = document.createElement('div');
-  key.classList.add('piano-key', pianoClassNames.whiteKey, pianoClassNames.keyUp, 'white-key-'+whiteKeyNumber, 'piano-key-'+pianoKeyNumber);
+  key.classList.add(pianoClassNames.pianoKey, pianoClassNames.whiteKey, pianoClassNames.keyUp, 'white-key-'+whiteKeyNumber, 'piano-key-'+pianoKeyNumber);
   this.whiteKeysWrapper.appendChild(key);
   key.style.cssText = `width: ${keyWidthPercent}%`;
   return key;
@@ -30,7 +30,7 @@ exports.whiteKeyMake = whiteKeyMake;
 
 function blackKeyMake(blackKeyNumber, keyWidthPercent, pianoKeyNumber, totalWhiteKeys) {
   const key = document.createElement('div');
-  key.classList.add('piano-key', pianoClassNames.blackKey, 'black-key-'+blackKeyNumber, 'piano-key-'+pianoKeyNumber);
+  key.classList.add(pianoClassNames.pianoKey, pianoClassNames.blackKey, 'black-key-'+blackKeyNumber, pianoClassNames.pianoKeyNumber(pianoKeyNumber));
   this.blackKeysWrapper.appendChild(key);
   key.style.cssText = `width: ${keyWidthPercent}%`;
   return key;
