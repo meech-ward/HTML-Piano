@@ -56,32 +56,8 @@ https://en.wikipedia.org/wiki/Piano
 */
 
 function buildPianoWithNotes(startNoteData, endNoteData) {
-  if (!startNoteData || !endNoteData) {
-    throw new PianoBuilderError();
-  }
-
-  const keyMap= {'c':'c#', 'd': 'd#', 'f': 'f#', 'g': 'g#', 'a': 'a#'};
-  const blackNotes = ['c#', 'd#', 'f#', 'g#','a#'];
-  const whiteNotes = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
-  const octaves = [0,1,2,3,4,5,6,7,8];
   
-  if (!whiteNotes.includes(startNoteData.note) && !blackNotes.includes(startNoteData.note)) {
-    // Invalid start note
-    throw new PianoBuilderError();
-  }
-  if (!octaves.includes(startNoteData.octave)) {
-    // Invalid start octave
-    throw new PianoBuilderError();
-  }
-
-  if (!whiteNotes.includes(endNoteData.note) && !blackNotes.includes(endNoteData.note)) {
-    // Invalid start note
-    throw new PianoBuilderError();
-  }
-  if (!octaves.includes(endNoteData.octave)) {
-    // Invalid start octave
-    throw new PianoBuilderError();
-  }
+  keysFromNotes(startNoteData, endNoteData);
 
   this.startNoteData = startNoteData;
   this.endNoteData = endNoteData;
@@ -91,9 +67,45 @@ function buildPianoWithNotes(startNoteData, endNoteData) {
 exports.buildPianoWithNotes = buildPianoWithNotes;
 
 
+const noteData = {
+  keyMap: {'c':'c#', 'd': 'd#', 'f': 'f#', 'g': 'g#', 'a': 'a#'},
+  blackNotes: ['c#', 'd#', 'f#', 'g#','a#'],
+  whiteNotes: ['c', 'd', 'e', 'f', 'g', 'a', 'b'],
+  octaves: [0,1,2,3,4,5,6,7,8]
+};
+
+function validateNoteData(startNoteData, endNoteData) {
+  if (!startNoteData || !endNoteData) {
+    throw new PianoBuilderError();
+  }
+
+  
+  
+  if (!noteData.whiteNotes.includes(startNoteData.note) && !noteData.blackNotes.includes(startNoteData.note)) {
+    // Invalid start note
+    throw new PianoBuilderError();
+  }
+  if (!noteData.octaves.includes(startNoteData.octave)) {
+    // Invalid start octave
+    throw new PianoBuilderError();
+  }
+
+  if (!noteData.whiteNotes.includes(endNoteData.note) && !noteData.blackNotes.includes(endNoteData.note)) {
+    // Invalid start note
+    throw new PianoBuilderError();
+  }
+  if (!noteData.octaves.includes(endNoteData.octave)) {
+    // Invalid start octave
+    throw new PianoBuilderError();
+  }
+}
+
 function keysFromNotes(startNoteData, endNoteData) {
+  validateNoteData(startNoteData, endNoteData);
+
   let whiteKeysAmount = 0;
   let blackKeyLayout = {};
+
 
   return {whiteKeysAmount, blackKeyLayout};
 }

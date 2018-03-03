@@ -11,7 +11,7 @@
     "webpack-cli": "^2.0.9"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha",
+    "test": "./node_modules/mocha/bin/mocha --recursive",
     "build": "npx webpack piano/src/piano.js --output piano/dist/piano.js"
   },
   "author": "",
