@@ -1,5 +1,6 @@
 const pianoUtilities = require('./piano-utilities');
-const pianoEvents = require('./piano-events');
+const pianoMouseEvents = require('./piano-mouse-events');
+const pianoKeyboardEvents = require('./piano-keyboard-events');
 const pianoDOM = require('./piano-DOM');
 const pianoClassNames = require('./piano-class-names');
 
@@ -47,7 +48,7 @@ function buildBlackKeys() {
   }
 }
 
-function newPiano(whiteKeysAmount, blackKeysLayout) {
+function newPianoWithWhiteKeysAmount(whiteKeysAmount, blackKeysLayout) {
   const piano = Object.create(pianoObj);
 
   // Properties
@@ -65,8 +66,42 @@ function newPiano(whiteKeysAmount, blackKeysLayout) {
   buildBlackKeys.call(piano);
 
   // EventListeners
-  pianoEvents.addPianoKeyEventListeners(piano);
+  pianoMouseEvents.addPianoKeyEventListeners(piano);
+
+  // Musical Typing
+  piano.enableMusicalTyping = function(startingKeyNumber = 1) {
+    const pianoLetters = require('./piano-letters');
+    const addKeyboardEvents = require('./piano-keyboard-events').addKeyboardEvents;
+    addKeyboardEvents(this, pianoLetters, startingKeyNumber);
+    pianoLetters.addLettersToKeys(this, startingKeyNumber);
+  }
+  piano.disableMusicalTyping = function() {
+
+  }
 
   return piano;
+}
+
+
+
+function newPianoWithNotes(startNote, endNote) {
+  const piano = Object.create(pianoObj);
+
+  const blackNotes = {'c':'c#', 'd': 'd#', 'f': 'f#', 'g': 'g#', 'a': 'a#'};
+  const whiteNotes = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
+
+  return piano;
+}
+
+function newPiano(whiteKeysAmount, blackKeysLayout) {
+  if (typeof arguments[0] === 'number') {
+    return newPianoWithWhiteKeysAmount(arguments[0], arguments[1]);
+  }
+
+  if (typeof arguments[0] === 'object') {
+    return newPianoWithNotes(arguments[0], arguments[1]);
+  }
+
+  return null;
 }
 window.newPiano = newPiano;
