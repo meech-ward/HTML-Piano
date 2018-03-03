@@ -96,6 +96,23 @@ function validateNoteData(startNoteData, endNoteData) {
     // Invalid start octave
     throw new PianoBuilderError();
   }
+
+  if (startNoteData.octave > endNoteData.octave) {
+    throw new PianoBuilderError();
+  }
+
+  if (startNoteData.octave === endNoteData.octave) {
+    const startIndex = noteData.whiteNotes.indexOf(startNoteData.note);
+    const endIndex = noteData.whiteNotes.indexOf(endNoteData.note)
+    if (startIndex > endIndex) {
+      throw new PianoBuilderError();
+    }
+  }
+
+  // Sharp is currently not suported for start and end notes
+  if (noteData.blackNotes.includes(startNoteData.note) || noteData.blackNotes.includes(endNoteData.note)) {
+    throw new PianoBuilderError();
+  }
 }
 
 /// Only supports start and end normal notes, no sharp notes.
@@ -104,7 +121,6 @@ function keysFromNotes(startNoteData, endNoteData) {
 
   let whiteKeysAmount = 0;
   
-
   let startNoteIndex = null;
   let endNoteIndex = null;
   for (let i = 0; i < noteData.whiteNotes.length; i++) {
@@ -129,12 +145,34 @@ function keysFromNotes(startNoteData, endNoteData) {
   function addToBlackKeyLayout(visible, amount) {
     blackKeyLayout.push({visible, amount});
   }
+
+  let blanks = 1; // because there is always an empty for the very first
+  let solids = 0;
+  let lastBlackNote = null;
   for (let i = startNoteIndex; i < endNoteIndex; i++) {
     const blackNote = noteData.keyMap[noteData.whiteNotes[i]];
+    
     if (blackNote) {
-      addToBlackKeyLayout(false, 1);
-      addToBlackKeyLayout(true, 1);
+      solids++;
+    } else {
+      blanks++;
     }
+    
+    if (!blackNote && lastBlackNote) {
+      addToBlackKeyLayout(true, solids);
+      solids = 0;
+    }
+    
+    if (blackNote && !lastBlackNote) {
+      addToBlackKeyLayout(false, blanks);
+      blanks = 0;
+    }
+    
+    lastBlackNote = blackNote
+  }
+
+  if (solids > 0) {
+    addToBlackKeyLayout(true, solids);
   }
 
   return {whiteKeysAmount, blackKeyLayout};
