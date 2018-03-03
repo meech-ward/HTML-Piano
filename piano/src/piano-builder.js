@@ -1,6 +1,6 @@
 const pianoUtilities = require('./piano-utilities');
 const pianoDOM = require('./piano-DOM');
-
+const PianoBuilderError = require('./piano-build-error');
   
 function buildWhiteKeys() {
   for (let i = 1; i <= this.whiteKeysAmount; i++) {
@@ -48,12 +48,43 @@ function buildPianoWithWhiteKeysAmount(whiteKeysAmount, blackKeysLayout) {
 exports.buildPianoWithWhiteKeysAmount = buildPianoWithWhiteKeysAmount;
 
 
-// class PianoBuildError extends Error {}
+class PianoBuildError extends Error {}
 
-function buildPianoWithNotes(startNote, endNote) {
+/*
+Note data has a note and an octave, valid octaves are 0 - 8
+https://en.wikipedia.org/wiki/Piano
+*/
+
+function buildPianoWithNotes(startNoteData, endNoteData) {
+  if (!startNoteData || !endNoteData) {
+    throw new PianoBuilderError();
+  }
+
   const keyMap= {'c':'c#', 'd': 'd#', 'f': 'f#', 'g': 'g#', 'a': 'a#'};
   const blackNotes = ['c#', 'd#', 'f#', 'g#','a#'];
   const whiteNotes = ['c', 'd', 'e', 'f', 'g', 'a', 'b'];
+  const octaves = [0,1,2,3,4,5,6,7,8];
+  
+  if (!whiteNotes.includes(startNoteData.note) && !blackNotes.includes(startNoteData.note)) {
+    // Invalid start note
+    throw new PianoBuilderError();
+  }
+  if (!octaves.includes(startNoteData.octave)) {
+    // Invalid start octave
+    throw new PianoBuilderError();
+  }
+
+  if (!whiteNotes.includes(endNoteData.note) && !blackNotes.includes(endNoteData.note)) {
+    // Invalid start note
+    throw new PianoBuilderError();
+  }
+  if (!octaves.includes(endNoteData.octave)) {
+    // Invalid start octave
+    throw new PianoBuilderError();
+  }
+
+  this.startNoteData = startNoteData;
+  this.endNoteData = endNoteData;
 
   return this;
 }
