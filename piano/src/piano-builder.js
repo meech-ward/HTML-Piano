@@ -89,3 +89,12 @@ function buildPianoWithNotes(startNoteData, endNoteData) {
   return this;
 }
 exports.buildPianoWithNotes = buildPianoWithNotes;
+
+
+function keysFromNotes(startNoteData, endNoteData) {
+  let whiteKeysAmount = 0;
+  let blackKeyLayout = {};
+
+  return {whiteKeysAmount, blackKeyLayout};
+}
+exports.keysFromNotes = keysFromNotes;
