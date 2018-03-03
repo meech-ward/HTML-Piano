@@ -12,7 +12,7 @@
   },
   "scripts": {
     "test": "./node_modules/mocha/bin/mocha --recursive",
-    "build": "npx webpack piano/src/piano.js --output piano/dist/piano.js"
+    "build": "npx webpack piano/src/web-interface.js --output piano/dist/piano.js"
   },
   "author": "",
   "license": "ISC"

@@ -1,5 +1,8 @@
+module.exports = function(document) {
+
 const pianoUtilities = require('./piano-utilities');
 const pianoClassNames = require('./piano-class-names');
+
 
 function pianoElementMake() {
   const pianoElement = document.createElement('div');
@@ -56,3 +59,6 @@ function blackBlankMake(numberOfWhitesSinceLastBlack, blackKeyWidthPercent, whit
   return blank;
 }
 exports.blackBlankMake = blackBlankMake;
+
+return exports;
+}

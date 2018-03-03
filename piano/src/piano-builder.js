@@ -1,5 +1,6 @@
+module.exports = function(document) {
 const pianoUtilities = require('./piano-utilities');
-const pianoDOM = require('./piano-DOM');
+const pianoDOM = require('./piano-DOM')(document || window.document);
 const PianoBuilderError = require('./piano-build-error');
   
 function buildWhiteKeys() {
@@ -56,13 +57,11 @@ https://en.wikipedia.org/wiki/Piano
 */
 
 function buildPianoWithNotes(startNoteData, endNoteData) {
-  
-  keysFromNotes(startNoteData, endNoteData);
+  const keys = keysFromNotes(startNoteData, endNoteData);
 
   this.startNoteData = startNoteData;
   this.endNoteData = endNoteData;
-
-  return this;
+  return buildPianoWithWhiteKeysAmount.call(this, keys.whiteKeysAmount, keys.blackKeyLayout);
 }
 exports.buildPianoWithNotes = buildPianoWithNotes;
 
@@ -178,3 +177,6 @@ function keysFromNotes(startNoteData, endNoteData) {
   return {whiteKeysAmount, blackKeyLayout};
 }
 exports.keysFromNotes = keysFromNotes;
+
+return exports;
+}

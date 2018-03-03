@@ -1,7 +1,9 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const pianoBuilder = require('../../piano/src/piano-builder');
+let document = {};
+
+const pianoBuilder = require('../../piano/src/piano-builder')(document);
 const PianoBuildError = require('../../piano/src/piano-build-error');
 
 function throwableFunction() {

@@ -1,7 +1,9 @@
 const chai = require('chai');
 const expect = chai.expect;
 
-const pianoBuilder = require('../../piano/src/piano-builder');
+let document = {};
+
+const pianoBuilder = require('../../piano/src/piano-builder')(document);
 const PianoBuildError = require('../../piano/src/piano-build-error');
 
 
@@ -116,6 +118,25 @@ describe("piano", function() {
             {visible: true, amount: 2}];
             expect(output.blackKeyLayout).to.deep.equal(blackExpected);
           });
+        });
+      });
+      context("given a single octave", () => {
+        const note1 = noteData("c", 1);
+        const note2 = noteData("b", 1);
+        let output = null;
+        beforeEach(() => {
+          output = pianoBuilder.keysFromNotes(note1, note2);
+        })
+        it("should return 7 white keys amount", () => {
+          expect(output.whiteKeysAmount).to.equal(7);
+        });
+        it("should return standard black keys layout", () => {
+          const blackExpected = [
+            {visible: false, amount: 1}, 
+            {visible: true, amount: 2},
+            {visible: false, amount: 1},
+            {visible: true, amount: 3}];
+          expect(output.blackKeyLayout).to.deep.equal(blackExpected);
         });
       });
     });
