@@ -28,6 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
     ];
     const piano = newPiano(whiteKeys, blackKeys);
     piano.enableMusicalTyping(13);
+    // piano.disableMusicalTyping();
     piano.keyDown = (keyNumber) => {
       console.log("key down", keyNumber);
 

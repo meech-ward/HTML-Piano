@@ -21,32 +21,14 @@ function keyArray(piano) {
 }
 exports.keyArray = keyArray;
 
-function find(element, className) {
-  if (element.classList.contains(className)) {
-    return element;
-  }
-
-  const childrenArray = Array.from(element.children);
-  for (childElement of childrenArray) {
-    const foundElement = find(childElement, className);
-    if (foundElement) {
-      return foundElement;
-    }
-  }
-
-  return null;
-}
-
 function keyForLetter(letter, piano, startingKeyNumber) {
   const letters = keyArray(piano);
 
   for (let index = 0; index < letters.length; index++)
     if (letter === letters[index]) {
       const keyClass = pianoClassNames.pianoKeyNumber(index+startingKeyNumber);
-      // const key = document.querySelector('.'+keyClass);
-      const key = find(piano.HTML, keyClass);
-      console.log("keyClass", keyClass, "key", key);
-      return key;
+      const keys = piano.HTML.querySelectorAll("."+keyClass);
+      return keys.length > 0 ? keys[0] : null;
     }
     return null;
 }
@@ -60,8 +42,17 @@ function addLettersToKeys(piano, startingKeyNumber) {
       continue;
     }
     const pTag = document.createElement('p');
+    pTag.classList.add('musical-typing-letter');
     pTag.innerText = letter;
     key.appendChild(pTag);
   }
 }
 exports.addLettersToKeys = addLettersToKeys;
+
+function removeLettersFromKeys(piano) {
+  const textElements = piano.HTML.querySelectorAll('.musical-typing-letter');
+  for (const element of textElements) {
+    element.remove();
+  }
+}
+exports.removeLettersFromKeys = removeLettersFromKeys;

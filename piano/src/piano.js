@@ -69,14 +69,15 @@ function newPianoWithWhiteKeysAmount(whiteKeysAmount, blackKeysLayout) {
   pianoMouseEvents.addPianoKeyEventListeners(piano);
 
   // Musical Typing
+  const pianoLetters = require('./piano-letters');
+  const keyboardEvents = require('./piano-keyboard-events')(pianoLetters);
   piano.enableMusicalTyping = function(startingKeyNumber = 1) {
-    const pianoLetters = require('./piano-letters');
-    const addKeyboardEvents = require('./piano-keyboard-events').addKeyboardEvents;
-    addKeyboardEvents(this, pianoLetters, startingKeyNumber);
+    keyboardEvents.addKeyboardEvents(this, pianoLetters, startingKeyNumber);
     pianoLetters.addLettersToKeys(this, startingKeyNumber);
   }
   piano.disableMusicalTyping = function() {
-
+    keyboardEvents.removeKeyboardEvents(this);
+    pianoLetters.removeLettersFromKeys(this);
   }
 
   return piano;
