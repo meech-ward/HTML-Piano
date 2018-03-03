@@ -79,8 +79,6 @@ function validateNoteData(startNoteData, endNoteData) {
     throw new PianoBuilderError();
   }
 
-  
-  
   if (!noteData.whiteNotes.includes(startNoteData.note) && !noteData.blackNotes.includes(startNoteData.note)) {
     // Invalid start note
     throw new PianoBuilderError();
@@ -100,12 +98,44 @@ function validateNoteData(startNoteData, endNoteData) {
   }
 }
 
+/// Only supports start and end normal notes, no sharp notes.
 function keysFromNotes(startNoteData, endNoteData) {
   validateNoteData(startNoteData, endNoteData);
 
   let whiteKeysAmount = 0;
-  let blackKeyLayout = {};
+  
 
+  let startNoteIndex = null;
+  let endNoteIndex = null;
+  for (let i = 0; i < noteData.whiteNotes.length; i++) {
+    const whiteNote = noteData.whiteNotes[i];
+
+    if (!startNoteIndex) {
+      if (whiteNote === startNoteData.note) {
+        startNoteIndex = i;
+      }
+    }
+
+    if (!endNoteIndex) {
+      if (whiteNote === endNoteData.note) {
+        endNoteIndex = i;
+      }
+    }
+  }
+
+  whiteKeysAmount = endNoteIndex - startNoteIndex + 1;
+
+  let blackKeyLayout = [];
+  function addToBlackKeyLayout(visible, amount) {
+    blackKeyLayout.push({visible, amount});
+  }
+  for (let i = startNoteIndex; i < endNoteIndex; i++) {
+    const blackNote = noteData.keyMap[noteData.whiteNotes[i]];
+    if (blackNote) {
+      addToBlackKeyLayout(false, 1);
+      addToBlackKeyLayout(true, 1);
+    }
+  }
 
   return {whiteKeysAmount, blackKeyLayout};
 }
