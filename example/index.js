@@ -66,8 +66,14 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     } 
 
-    piano.keyDown = (keyNumber) => {
-      console.log("key down", keyNumber);
+    piano.keyDown = (key) => {
+      const keyNumber = piano.keyNumber(key);
+      const keyNote = piano.keyNote(key);
+      const keyOctave = piano.keyOctave(key);
+
+      console.log("key number", keyNumber) 
+      console.log("note", keyNote);
+      console.log("octave", keyOctave);
 
       let letterNumber = (keyNumber % 12);
       letterNumber = letterNumber == 0 ? 12 : letterNumber;

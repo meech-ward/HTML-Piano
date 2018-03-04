@@ -17,12 +17,12 @@ let pianoObj = {
   _keyDown: function(key) {
     key.classList.remove(pianoClassNames.keyUp);
     key.classList.add(pianoClassNames.keyDown);
-    this.keyDown(pianoUtilities.keyNumber(key));
+    this.keyDown(key);
   },
   _keyUp: function(key) {
     key.classList.add(pianoClassNames.keyUp);
     key.classList.remove(pianoClassNames.keyDown);
-    this.keyUp(pianoUtilities.keyNumber(key));
+    this.keyUp(key);
   },
   enableMusicalTyping: function(startingKeyNumber = 1) {
     this._keyboardEvents.addKeyboardEvents(this, this._pianoLetters, startingKeyNumber);
@@ -38,6 +38,15 @@ let pianoObj = {
   },
   get _pianoLetters() {
     return require('./piano-letters');
+  },
+  keyOctave(key) {
+    return pianoUtilities.keyOctave(key);
+  },
+  keyNumber(key) {
+    return pianoUtilities.keyNumber(key);
+  },
+  keyNote(key) {
+    return pianoUtilities.keyNote(key);
   }
 };
   
