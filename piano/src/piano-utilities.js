@@ -32,69 +32,52 @@ function arrayFromBlackKeys(blackKeysLayout) {
 }
 exports.arrayFromBlackKeys = arrayFromBlackKeys;
 
+//// Class stuff
+
 function keyNumber(key) {
-  const pianoKeyClass = 'piano-key-';
-  if (!key) {
+  const pianoKeyClass = classNames.pianoKeyNumber();
+  const result = classEnding(key, pianoKeyClass);
+  if (!result) {
     return null;
   }
-  if (!key.classList) {
-    return null;
-  }
-  let pianoKeyClassNumber = null;
-  const classList = key.classList;
-  for (elementClass of classList) {
-    if (elementClass.startsWith(pianoKeyClass)) {
-      pianoKeyClassNumber = Number(elementClass.substr(pianoKeyClass.length));
-      break;
-    }
-  }
-  return pianoKeyClassNumber;
+  return Number(result);
 }
 exports.keyNumber = keyNumber;
 
 function keyNote(key) {
-  const pianoKeyClass = 'piano-note-';
-  if (!key) {
+  const pianoKeyClass = classNames.pianoNote();
+  const result = classEnding(key, pianoKeyClass);
+  if (!result) {
     return null;
-  }
-  if (!key.classList) {
-    return null;
-  }
-  let result = null;
-  const classList = key.classList;
-  for (elementClass of classList) {
-    if (elementClass.startsWith(pianoKeyClass)) {
-      result = elementClass.substr(pianoKeyClass.length);
-      break;
-    }
   }
   return result;
 }
 exports.keyNote = keyNote;
 
 function keyOctave(key) {
-  const pianoKeyClass = 'piano-octave-';
-  if (!key) {
+  const pianoKeyClass = classNames.pianoOctave();
+  const result = classEnding(key, pianoKeyClass);
+  if (!result) {
     return null;
   }
-  if (!key.classList) {
+  return Number(result);
+}
+exports.keyOctave = keyOctave;
+
+function classEnding(element, classStart) {
+  if (!element) {
+    return null;
+  }
+  if (!element.classList) {
     return null;
   }
   let result = null;
-  const classList = key.classList;
+  const classList = element.classList;
   for (elementClass of classList) {
-    if (elementClass.startsWith(pianoKeyClass)) {
-      result = Number(elementClass.substr(pianoKeyClass.length));
+    if (elementClass.startsWith(classStart)) {
+      result = elementClass.substr(classStart.length);
       break;
     }
   }
   return result;
 }
-exports.keyOctave = keyOctave;
-
-
-// return 'piano-key-'+number
-
-//   return 'piano-note-'+note
-
-//   return 'piano-octave-'+octave
