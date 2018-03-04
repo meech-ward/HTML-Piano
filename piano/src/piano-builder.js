@@ -78,14 +78,16 @@ function buildPianoWithNotes(startNoteData, endNoteData) {
   
   for(;;) {
     addNoteAndOctaveToKey(piano, pianoKeyNumber, currentNote, currentOctave);
+    
+    if (currentNote === endNoteData.note && currentOctave === endNoteData.octave) {
+      // Far enough, stop now
+      break;
+    }
+
     pianoKeyNumber++;
     currentNote = noteData.nextKeyMap[currentNote];
     if (currentNote === noteData.whiteNotes[0]) {
       currentOctave++;
-    }
-    if (noteData.nextKeyMap[endNoteData.note] === currentNote && currentOctave === endNoteData.octave) {
-      // Far enough, stop now
-      break;
     }
   }
 }
@@ -142,8 +144,6 @@ function validateNoteData(startNoteData, endNoteData) {
 /// Only supports start and end normal notes, no sharp notes.
 function keysFromNotes(startNoteData, endNoteData) {
   validateNoteData(startNoteData, endNoteData);
-
-  let whiteKeysAmount = 0;
   
   let startNoteIndex = null;
   let endNoteIndex = null;
@@ -163,7 +163,10 @@ function keysFromNotes(startNoteData, endNoteData) {
     }
   }
 
-  whiteKeysAmount = endNoteIndex - startNoteIndex + 1;
+  const totalWhites = noteData.whiteNotes.length;
+
+  let whiteKeysAmount = endNoteIndex - startNoteIndex + 1;
+  whiteKeysAmount += totalWhites * (endNoteData.octave - startNoteData.octave);
 
   let blackKeyLayout = [];
   function addToBlackKeyLayout(visible, amount) {
@@ -173,8 +176,10 @@ function keysFromNotes(startNoteData, endNoteData) {
   let blanks = 1; // because there is always an empty for the very first
   let solids = 0;
   let lastBlackNote = null;
-  for (let i = startNoteIndex; i < endNoteIndex; i++) {
-    const blackNote = noteData.whiteToBlackKeyMap[noteData.whiteNotes[i]];
+  for (let i = startNoteIndex + (startNoteData.octave * totalWhites); i < endNoteIndex + (endNoteData.octave * totalWhites); i++) {
+    const whiteIndex = i % totalWhites;
+    const whiteNote = noteData.whiteNotes[whiteIndex];
+    const blackNote = noteData.whiteToBlackKeyMap[whiteNote];
     
     if (blackNote) {
       solids++;
