@@ -44,18 +44,25 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(piano.HTML);
   }
   function createSmallPiano() {
-    const whiteKeys = 14;
-    const blackKeys = [
-      {visible: false, amount: 1}, 
-      {visible: true, amount: 2},
-      {visible: false, amount: 1},
-      {visible: true, amount: 3},
-      {visible: false, amount: 1},
-      {visible: true, amount: 2},
-      {visible: false, amount: 1},
-      {visible: true, amount: 3}
-    ];
-    const piano = newPiano(whiteKeys, blackKeys);
+    const startNote = {
+      note: "c",
+      octave: 3
+    };
+    const endNote = {
+      note: "b",
+      octave: 4
+    };
+
+    let piano;
+    try {
+      piano = newPiano(startNote, endNote);
+    } catch (e) {
+      if (e instanceof PianoBuildError) {
+        console.log("Error building piano", e);
+      } else {
+        throw e;
+      }
+    } 
 
     piano.keyDown = (keyNumber) => {
       console.log("key down", keyNumber);

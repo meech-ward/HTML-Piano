@@ -24,7 +24,7 @@ exports.pianoElementMake = pianoElementMake;
 
 function whiteKeyMake(whiteKeyNumber, keyWidthPercent, pianoKeyNumber, totalWhiteKeys) {
   const key = document.createElement('div');
-  key.classList.add(pianoClassNames.pianoKey, pianoClassNames.whiteKey, pianoClassNames.keyUp, 'white-key-'+whiteKeyNumber, 'piano-key-'+pianoKeyNumber);
+  key.classList.add(pianoClassNames.pianoKey, pianoClassNames.whiteKey, pianoClassNames.keyUp, 'white-key-'+whiteKeyNumber, pianoClassNames.pianoKeyNumber(pianoKeyNumber));
   this.whiteKeysWrapper.appendChild(key);
   key.style.cssText = `width: ${keyWidthPercent}%`;
   return key;

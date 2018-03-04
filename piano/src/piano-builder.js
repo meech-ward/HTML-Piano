@@ -2,6 +2,7 @@ module.exports = function(document) {
 const pianoUtilities = require('./piano-utilities');
 const pianoDOM = require('./piano-DOM')(document || window.document);
 const PianoBuilderError = require('./piano-build-error');
+const pianoClassNames = require('./piano-class-names');
   
 function buildWhiteKeys() {
   for (let i = 1; i <= this.whiteKeysAmount; i++) {
@@ -49,7 +50,13 @@ function buildPianoWithWhiteKeysAmount(whiteKeysAmount, blackKeysLayout) {
 exports.buildPianoWithWhiteKeysAmount = buildPianoWithWhiteKeysAmount;
 
 
-class PianoBuildError extends Error {}
+const noteData = {
+  whiteToBlackKeyMap: {'c':'c#', 'd': 'd#', 'f': 'f#', 'g': 'g#', 'a': 'a#'},
+  nextKeyMap: {'c':'c#', 'c#': 'd', 'd': 'd#', 'd#': 'e', 'e': 'f', 'f': 'f#', 'f#': 'g', 'g': 'g#', 'g#': 'a', 'a': 'a#', 'a#' : 'b', 'b': 'c'},
+  blackNotes: ['c#', 'd#', 'f#', 'g#','a#'],
+  whiteNotes: ['c', 'd', 'e', 'f', 'g', 'a', 'b'],
+  octaves: [0,1,2,3,4,5,6,7,8]
+};
 
 /*
 Note data has a note and an octave, valid octaves are 0 - 8
@@ -61,17 +68,35 @@ function buildPianoWithNotes(startNoteData, endNoteData) {
 
   this.startNoteData = startNoteData;
   this.endNoteData = endNoteData;
-  return buildPianoWithWhiteKeysAmount.call(this, keys.whiteKeysAmount, keys.blackKeyLayout);
+
+  const piano = buildPianoWithWhiteKeysAmount.call(this, keys.whiteKeysAmount, keys.blackKeyLayout);
+
+  let pianoKeyNumber = 1;
+  let currentOctave = startNoteData.octave;
+  let currentNote = startNoteData.note;
+
+  
+  for(;;) {
+    addNoteAndOctaveToKey(piano, pianoKeyNumber, currentNote, currentOctave);
+    pianoKeyNumber++;
+    currentNote = noteData.nextKeyMap[currentNote];
+    if (currentNote === noteData.whiteNotes[0]) {
+      currentOctave++;
+    }
+    if (noteData.nextKeyMap[endNoteData.note] === currentNote && currentOctave === endNoteData.octave) {
+      // Far enough, stop now
+      break;
+    }
+  }
 }
 exports.buildPianoWithNotes = buildPianoWithNotes;
 
-
-const noteData = {
-  keyMap: {'c':'c#', 'd': 'd#', 'f': 'f#', 'g': 'g#', 'a': 'a#'},
-  blackNotes: ['c#', 'd#', 'f#', 'g#','a#'],
-  whiteNotes: ['c', 'd', 'e', 'f', 'g', 'a', 'b'],
-  octaves: [0,1,2,3,4,5,6,7,8]
-};
+function addNoteAndOctaveToKey(piano, keyNumber, note, octave) {
+  const keyClass = pianoClassNames.pianoKeyNumber(keyNumber);
+  const key = piano.HTML.querySelector("."+keyClass);
+  key.classList.add(pianoClassNames.pianoNote(note));
+  key.classList.add(pianoClassNames.pianoOctave(octave));
+}
 
 function validateNoteData(startNoteData, endNoteData) {
   if (!startNoteData || !endNoteData) {
@@ -97,7 +122,7 @@ function validateNoteData(startNoteData, endNoteData) {
   }
 
   if (startNoteData.octave > endNoteData.octave) {
-    throw new PianoBuilderError();
+    throw new PianoBuilderError("Can't build a piano if the starting octave is larger than the ending octave");
   }
 
   if (startNoteData.octave === endNoteData.octave) {
@@ -149,7 +174,7 @@ function keysFromNotes(startNoteData, endNoteData) {
   let solids = 0;
   let lastBlackNote = null;
   for (let i = startNoteIndex; i < endNoteIndex; i++) {
-    const blackNote = noteData.keyMap[noteData.whiteNotes[i]];
+    const blackNote = noteData.whiteToBlackKeyMap[noteData.whiteNotes[i]];
     
     if (blackNote) {
       solids++;
