@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let pianoSynth = Synth.createInstrument('piano');
 
   function createBigPiano() {
+    // Using underlying white / black key layout data
     const whiteKeys = 28;
     const blackKeys = [
       {visible: false, amount: 1}, 
@@ -44,6 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(piano.HTML);
   }
   function createSmallPiano() {
+    // Using notes and octaves data
     const startNote = {
       note: "c",
       octave: 3
