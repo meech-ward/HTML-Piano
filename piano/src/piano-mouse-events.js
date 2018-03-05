@@ -6,7 +6,6 @@ let mouseDown = false;
 function addMouseEventListenersToKeys(piano, keys) {
   for (key of keys) {
     key.addEventListener('mousedown', function(event) {
-      console.log("mouse down");
       if (mouseDown) {return false;}
       mouseDown = true;
       piano._keyDown(this);
