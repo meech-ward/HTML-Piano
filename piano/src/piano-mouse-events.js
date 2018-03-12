@@ -31,7 +31,7 @@ function addMouseEventListenersToKeys(piano, keys) {
 }
 
 function addPianoKeyEventListeners(piano) {
-  addMouseEventListenersToKeys(piano, piano.whiteKeysWrapper.children);
-  addMouseEventListenersToKeys(piano, piano.blackKeysWrapper.children);
+  addMouseEventListenersToKeys(piano, piano.whiteKeys);
+  addMouseEventListenersToKeys(piano, piano.blackKeys);
 }
 exports.addPianoKeyEventListeners = addPianoKeyEventListeners;
