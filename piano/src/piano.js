@@ -14,6 +14,12 @@ All piano keys are indexed from 1 to whatever. Not 0
 let pianoObj = {
   keyUp: () => {},
   keyDown: () => {},
+  forceKeyDown: function(key) {
+    if (!key) {
+      return;
+    }
+    this._keyDown();
+  },
   _keyDown: function(key) {
     key.classList.remove(pianoClassNames.keyUp);
     key.classList.add(pianoClassNames.keyDown);
@@ -85,5 +91,5 @@ function newPiano(whiteKeysAmount, blackKeysLayout) {
   return null;
 }
 window.newPiano = newPiano;
-return newPiano;
+return {newPiano};
 }
