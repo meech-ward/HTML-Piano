@@ -20,6 +20,12 @@ let pianoObj = {
     }
     this._keyDown(key);
   },
+  forceKeyUp: function(key) {
+    if (!key || !key.classList) {
+      return;
+    }
+    this._keyUp(key);
+  },
   _keyDown: function(key) {
     key.classList.remove(pianoClassNames.keyUp);
     key.classList.add(pianoClassNames.keyDown);
