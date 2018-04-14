@@ -126,6 +126,16 @@ piano.keyDown = (key) => {
 }
 ```
 
+## Musical Typing
+
+This feature is still kind of primitive. You can enable musical typing for `qwerty` keyboards using the following method:
+
+```js
+piano.enableMusicalTyping(13);
+```
+
+Where 13 is the key to enable typing from.
+
 ## Example
 
 Look at the example directory for more information on how to use this.
