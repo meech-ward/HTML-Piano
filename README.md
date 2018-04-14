@@ -1,19 +1,49 @@
 # Piano
 
-A simple piano made with Vanilla JavaScript.
+A simple piano made with Vanilla JavaScript. Includes CSS and assets to create a full piano. 
 
-Use the code in the `piano/dist` directory
+> This is just an interface, it does not play any sound.
 
-## Creating a piano
+## Install
 
-Include the `piano` folder in your project and link to the css and JavaScript:
+### npm
+
+```terminal
+npm install html-piano
+```
+
+* You will have to link to the css and JavaScript from your html file:
+
+```html
+<link rel="stylesheet" href="node_modules/html-piano/piano/dist/piano.css">
+<script src="node_modules/html-piano/piano/dist/piano.js"></script>
+```
+
+### Direct Download
+
+* Download this project from https://github.com/meech-ward/HTML-Piano
+* Add the `piano/dist` directory to your project
+* Link to the css and JavaScript from your html file:
 
 ```html
 <link rel="stylesheet" href="piano/dist/piano.css">
 <script src="piano/dist/piano.js"></script>
 ```
 
-**Using notes and octaves data**
+This will give you a new global function called `newPiano` that you can use to create a new piano.
+
+## Creating a piano
+
+### Node 
+
+If you install this package using node, you will have to require the package with a window object. This should be the browser's window or a mock window.
+
+```js
+const htmlPiano = require('html-piano')(window);
+const newPiano = htmlPiano.newPiano;
+```
+
+### Using notes and octaves data
 
 Create start and end note objects that contain the note and octave to start and end on. No sharps or flats here.
 
@@ -35,21 +65,52 @@ let piano;
 try {
   piano = newPiano(startNote, endNote);
 } catch (e) {
-  if (e instanceof PianoBuildError) {
-    console.log("Error building piano", e);
-  } else {
-    throw e;
-  }
+  console.log("Error building piano", e);
 }
 
 document.body.appendChild(piano.HTML);
 ```
 
+### Using key layout data
+
+This method allows you to specify the number of white keys that you want to appear, and the layout of the black keys. Starting from left to right, use an object to specify how the black keys will appear in order.
+
+A pretty normal looking piano might look like this.
+
+```js
+const whiteKeys = 28;
+const blackKeys = [
+  {visible: false, amount: 1}, 
+  {visible: true, amount: 2},
+  {visible: false, amount: 1},
+  {visible: true, amount: 3},
+  {visible: false, amount: 1},
+  {visible: true, amount: 2},
+  {visible: false, amount: 1},
+  {visible: true, amount: 3},
+  {visible: false, amount: 1},
+  {visible: true, amount: 2},
+  {visible: false, amount: 1},
+  {visible: true, amount: 3},
+  {visible: false, amount: 1},
+  {visible: true, amount: 2},
+  {visible: false, amount: 1},
+  {visible: true, amount: 3},
+  {visible: false, amount: 1},
+];
+let piano;
+try {
+  piano = newPiano(whiteKeys, blackKeys);
+} catch (e) {
+  console.log("Error building piano", e);
+}
+```
+
 ## Responding to events
 
-Once the piano is on the screen, you will want to be able to respond to key down and key up events. These are implemented using a callback function that passes in the key that the event happend on. You can then use the key to request the following data:
+Once the piano is on the screen, you will want to be able to respond to key down and key up events. These are implemented using a callback function that passes in the key that the event happened on. You can then use the key to request the following data:
 
-* `keyNumber`, the number of the key in relation to all the other keys. This starts at 1 on the left and increments as you go to the right.
+* `keyNumber`, the number of the key in relation to all the other keys. This starts at **1** (not 0) on the left and increments as you go to the right.
 * `keyNote`, the note of the key played as a lowercase string.
 * `keyOctave`, the octave of the key played as a number.
 
