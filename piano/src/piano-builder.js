@@ -107,20 +107,20 @@ function validateNoteData(startNoteData, endNoteData) {
 
   if (!noteData.whiteNotes.includes(startNoteData.note) && !noteData.blackNotes.includes(startNoteData.note)) {
     // Invalid start note
-    throw new PianoBuilderError();
+    throw new PianoBuilderError("Invalid Start Note");
   }
   if (!noteData.octaves.includes(startNoteData.octave)) {
     // Invalid start octave
-    throw new PianoBuilderError();
+    throw new PianoBuilderError("Invalid Start Octave");
   }
 
   if (!noteData.whiteNotes.includes(endNoteData.note) && !noteData.blackNotes.includes(endNoteData.note)) {
-    // Invalid start note
-    throw new PianoBuilderError();
+    // Invalid end note
+    throw new PianoBuilderError("Invalid End Note");
   }
   if (!noteData.octaves.includes(endNoteData.octave)) {
-    // Invalid start octave
-    throw new PianoBuilderError();
+    // Invalid end octave
+    throw new PianoBuilderError("Invalid End Octave");
   }
 
   if (startNoteData.octave > endNoteData.octave) {
