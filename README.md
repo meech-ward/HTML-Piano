@@ -128,6 +128,13 @@ piano.keyDown = (key) => {
 }
 ```
 
+## Force Key Down
+
+If you want to programmatically press a piano key, use the `forceKeyDown` and `forceKeyUp` methods on `piano`.
+
+```js
+const key = document
+
 ## Musical Typing
 
 This feature is still kind of primitive. You can enable musical typing for `qwerty` keyboards using the following method:

@@ -38,6 +38,25 @@ describe("piano", function() {
         let result = forceKeyDown(piano, key);
         expect(result).to.not.equal(null);
       });
+      it("should pass the key to _keyDown", () => {
+        const key = newPianoKey();
+        const piano = newPiano({note: "a",octave: 1}, {note: "a",octave: 1});
+        let result = forceKeyDown(piano, key);
+        expect(result).to.deep.equal(key);
+      });
+    });
+    context("given something that is not a piano key", () => {
+      it("should do nothing", () => {
+        const piano = newPiano({note: "a",octave: 1}, {note: "a",octave: 1});
+        let result = forceKeyDown(piano, {});
+        expect(result).to.equal(null);
+        result = forceKeyDown(piano, "a");
+        expect(result).to.equal(null);
+        result = forceKeyDown(piano, 1);
+        expect(result).to.equal(null);
+        result = forceKeyDown(piano, []);
+        expect(result).to.equal(null);
+      });
     });
   });
 });

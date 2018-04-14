@@ -15,10 +15,10 @@ let pianoObj = {
   keyUp: () => {},
   keyDown: () => {},
   forceKeyDown: function(key) {
-    if (!key) {
+    if (!key || !key.classList) {
       return;
     }
-    this._keyDown();
+    this._keyDown(key);
   },
   _keyDown: function(key) {
     key.classList.remove(pianoClassNames.keyUp);
