@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.body.appendChild(piano.HTML);
+    window.piano1 = piano;
   }
   function createSmallPiano() {
     // Using notes and octaves data
@@ -85,6 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     document.body.appendChild(piano.HTML);
+    window.piano2 = piano;
   }
 
   function letterForKey(key) {
