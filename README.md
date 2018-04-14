@@ -133,7 +133,10 @@ piano.keyDown = (key) => {
 If you want to programmatically press a piano key, use the `forceKeyDown` and `forceKeyUp` methods on `piano`.
 
 ```js
-const key = document
+const key = document.querySelector(".white-key-4");
+piano.forceKeyDown(key);
+setTimeout(() => piano.forceKeyUp(key), 2000);
+```
 
 ## Musical Typing
 
