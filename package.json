@@ -1,8 +1,8 @@
 {
-  "name": "piano",
+  "name": "html-piano",
   "version": "1.0.0",
   "description": "",
-  "main": "example.js",
+  "main": "piano/src/piano.js",
   "dependencies": {},
   "devDependencies": {
     "chai": "^4.1.2",
