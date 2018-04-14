@@ -85,4 +85,5 @@ function newPiano(whiteKeysAmount, blackKeysLayout) {
   return null;
 }
 window.newPiano = newPiano;
+return {newPiano};
 }
