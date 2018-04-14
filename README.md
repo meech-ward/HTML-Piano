@@ -130,4 +130,4 @@ piano.keyDown = (key) => {
 
 Look at the example directory for more information on how to use this.
 
-<https://meech-ward.github.io/HTML-Piano-VanillaJS/example/index.html>
+<https://meech-ward.github.io/HTML-Piano/example/index.html>
