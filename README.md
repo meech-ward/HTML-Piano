@@ -1,10 +1,10 @@
 # HTML Piano
 
-[![Build Status](https://travis-ci.org/meech-ward/HTML-Piano.svg?branch=master)](https://travis-ci.org/meech-ward/HTML-Piano)
-
 A simple piano made with Vanilla JavaScript. Includes CSS and assets to create a full piano. 
 
 > This is just an interface, it does not play any sound.
+
+[![Build Status](https://travis-ci.org/meech-ward/HTML-Piano.svg?branch=master)](https://travis-ci.org/meech-ward/HTML-Piano)
 
 ## Install
 
