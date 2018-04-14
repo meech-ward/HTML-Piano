@@ -1,4 +1,6 @@
-# Piano
+# HTML Piano
+
+[![Build Status](https://travis-ci.org/meech-ward/HTML-Piano.svg?branch=master)](https://travis-ci.org/meech-ward/HTML-Piano)
 
 A simple piano made with Vanilla JavaScript. Includes CSS and assets to create a full piano. 
 
