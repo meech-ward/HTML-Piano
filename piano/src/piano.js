@@ -3,8 +3,6 @@
 module.exports = function(window) {
 const pianoUtilities = require('./piano-utilities');
 const pianoMouseEvents = require('./piano-mouse-events');
-const pianoKeyboardEvents = require('./piano-keyboard-events');
-const pianoDOM = require('./piano-DOM');
 const pianoClassNames = require('./piano-class-names');
 const pianoBuilder = require('./piano-builder')(window.document);
 
