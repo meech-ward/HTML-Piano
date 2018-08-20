@@ -11,7 +11,7 @@ const pianoBuilder = require('./piano-builder')(window.document);
 /*
 All piano keys are indexed from 1 to whatever. Not 0
 */
-let pianoObj = {
+let Piano = {
   keyUp: () => {},
   keyDown: () => {},
   forceKeyDown: function(key) {
@@ -63,7 +63,7 @@ let pianoObj = {
 };
   
 function buildPiano(buildFunction) {
-  const piano = Object.create(pianoObj);
+  const piano = Object.create(Piano);
 
   buildFunction(piano);
   
