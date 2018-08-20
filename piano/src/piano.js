@@ -42,6 +42,9 @@ let Piano = {
     this._keyboardEvents.removeKeyboardEvents(this);
     this._pianoLetters.removeLettersFromKeys(this);
   },
+  get totalKeys() {
+    return this.numberOfWhiteKeys + this.numberOfBlackKeys;
+  },
   get _keyboardEvents() {
     // Musical Typing
     return require('./piano-keyboard-events')(this._pianoLetters);

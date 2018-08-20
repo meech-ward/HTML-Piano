@@ -45,6 +45,9 @@ function buildPianoWithWhiteKeysAmount(whiteKeysAmount, blackKeysLayout) {
   buildWhiteKeys.call(this);
   buildBlackKeys.call(this);
 
+  this.numberOfWhiteKeys = whiteKeysAmount;
+  this.numberOfBlackKeys = this.blackKeysArray.filter((x) => x).length;
+
   return this;
 }
 exports.buildPianoWithWhiteKeysAmount = buildPianoWithWhiteKeysAmount;
