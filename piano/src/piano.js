@@ -85,12 +85,14 @@ function newPianoWithNotes(startNote, endNote) {
   });
 }
 
-function newPiano(whiteKeysAmount, blackKeysLayout) {
+function newPiano() {
   if (typeof arguments[0] === 'number') {
+    // whiteKeysAmount, blackKeysLayout
     return newPianoWithWhiteKeysAmount(arguments[0], arguments[1]);
   }
 
   if (typeof arguments[0] === 'object') {
+    // startNote, endNote
     return newPianoWithNotes(arguments[0], arguments[1]);
   }
 
