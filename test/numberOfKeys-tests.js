@@ -3,7 +3,7 @@ const expect = chai.expect;
 
 const MockBrowser = require('mock-browser').mocks.MockBrowser;
 const window = MockBrowser.createWindow();
-const pianoDOM = require('../piano/src/piano-DOM')(window.document);
+const pianoDOM = require('../piano/src/HTML/piano-DOM')(window.document);
 
 const { newPiano } = require('../piano/src/piano')(pianoDOM);
 
