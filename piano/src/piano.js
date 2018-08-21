@@ -2,7 +2,7 @@
 
 module.exports = function(pianoDOM) {
 const pianoUtilities = require('./piano-utilities');
-const pianoMouseEvents = require('./piano-mouse-events');
+const pianoMouseEvents = require('./mouseEvents/piano-mouse-events');
 const pianoClassNames = require('./piano-class-names');
 const pianoBuilder = require('./build/piano-builder')(pianoDOM);
 

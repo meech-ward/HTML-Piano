@@ -1,4 +1,4 @@
-const pianoClassNames = require('./piano-class-names');
+const pianoClassNames = require('../piano-class-names');
 
 function keyArray(piano) {
   const whiteLetters = ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\''];

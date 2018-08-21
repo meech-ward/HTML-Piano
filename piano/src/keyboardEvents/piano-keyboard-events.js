@@ -1,5 +1,3 @@
-const pianoClassNames = require('./piano-class-names');
-
 module.exports = function(pianoLetters) {
   let keysDown = {};
   let pianos = [];

@@ -1,4 +1,3 @@
-const pianoClassNames = require('./piano-class-names');
 
 // True if the mouse is currently down
 let mouseDown = false;
