@@ -4,8 +4,9 @@ const expect = chai.expect;
 const MockBrowser = require('mock-browser').mocks.MockBrowser;
 const window = MockBrowser.createWindow();
 const document = MockBrowser.createDocument();
-const newPiano = require('../piano/src/piano')(window).newPiano;
-const pianoDOM = require('../piano/src/piano-DOM')(document);
+const pianoDOM = require('../piano/src/piano-DOM')(document || window.document);
+
+const newPiano = require('../piano/src/piano')(pianoDOM).newPiano;
 
 function newPianoKey() {
   let thing = {};

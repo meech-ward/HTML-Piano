@@ -1,10 +1,9 @@
 "use strict";
 
-module.exports = function(window) {
+module.exports = function(pianoDOM) {
 const pianoUtilities = require('./piano-utilities');
 const pianoMouseEvents = require('./piano-mouse-events');
 const pianoClassNames = require('./piano-class-names');
-const pianoDOM = require('./piano-DOM')(window.document);
 const pianoBuilder = require('./build/piano-builder')(pianoDOM);
 
 /*
@@ -85,6 +84,6 @@ function newPiano() {
 
   return null;
 }
-window.newPiano = newPiano;
+
 return {newPiano};
 }
