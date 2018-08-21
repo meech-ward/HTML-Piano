@@ -1,4 +1,4 @@
-const classNames = require("./piano-class-names")
+const classNames = require("./piano-class-names");
 
 function pianoKeyNumberFromWhiteKeyNumber(whiteKeyNumber = 0, blackKeysArray = []) {
   // 5 would be 8 because 3 black keys are there before 5
@@ -34,36 +34,6 @@ exports.arrayFromBlackKeys = arrayFromBlackKeys;
 
 //// Class stuff
 
-function keyNumber(key) {
-  const pianoKeyClass = classNames.pianoKeyNumber();
-  const result = classEnding(key, pianoKeyClass);
-  if (!result) {
-    return null;
-  }
-  return Number(result);
-}
-exports.keyNumber = keyNumber;
-
-function keyNote(key) {
-  const pianoKeyClass = classNames.pianoNote();
-  const result = classEnding(key, pianoKeyClass);
-  if (!result) {
-    return null;
-  }
-  return result;
-}
-exports.keyNote = keyNote;
-
-function keyOctave(key) {
-  const pianoKeyClass = classNames.pianoOctave();
-  const result = classEnding(key, pianoKeyClass);
-  if (!result) {
-    return null;
-  }
-  return Number(result);
-}
-exports.keyOctave = keyOctave;
-
 function classEnding(element, classStart) {
   if (!element) {
     return null;
@@ -81,3 +51,4 @@ function classEnding(element, classStart) {
   }
   return result;
 }
+exports.classEnding = classEnding;

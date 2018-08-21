@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = function(pianoDOM) {
-const pianoUtilities = require('./piano-utilities');
+const keyData = require('./keyData');
 const pianoMouseEvents = require('./mouseEvents/piano-mouse-events');
 const pianoClassNames = require('./piano-class-names');
 const pianoBuilder = require('./build/piano-builder')(pianoDOM);
@@ -38,13 +38,13 @@ let Piano = {
     return this.numberOfWhiteKeys + this.numberOfBlackKeys;
   },
   keyOctave(key) {
-    return pianoUtilities.keyOctave(key);
+    return keyData.keyOctave(key);
   },
   keyNumber(key) {
-    return pianoUtilities.keyNumber(key);
+    return keyData.keyNumber(key);
   },
   keyNote(key) {
-    return pianoUtilities.keyNote(key);
+    return keyData.keyNote(key);
   }
 };
   
