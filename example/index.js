@@ -28,7 +28,40 @@ document.addEventListener("DOMContentLoaded", () => {
       {visible: false, amount: 1},
     ];
     const piano = newPiano(whiteKeys, blackKeys);
-    piano.enableMusicalTyping(13);
+    
+    // Musical Typing
+    let currentMusicalTypingIndex = 13;
+    
+
+    function updateMusicalTypingPlacement() {
+      piano.disableMusicalTyping();
+      piano.enableMusicalTyping(currentMusicalTypingIndex);
+    }
+    updateMusicalTypingPlacement();
+    
+    document.addEventListener("keydown", function(event) {
+      console.log(event.key, piano.totalKeys);
+      if (event.key === "ArrowLeft" && currentMusicalTypingIndex > 1) {
+        currentMusicalTypingIndex--;
+        updateMusicalTypingPlacement();
+        console.log(piano.musicalTypingKeyForLetter('a').classList);
+        // if (!piano.musicalTypingKeyForLetter('a').classList.contains('white-key')) {
+        //   console.log("not currently white");
+        //   currentMusicalTypingIndex--;
+        //   updateMusicalTypingPlacement();
+        // }
+        
+      } else if (event.key === "ArrowRight" && currentMusicalTypingIndex < piano.totalKeys-11) {
+        currentMusicalTypingIndex++;
+        updateMusicalTypingPlacement();
+        // if (!piano.musicalTypingKeyForLetter('a').classList.contains('white-key')) {
+        //   currentMusicalTypingIndex++;
+        //   updateMusicalTypingPlacement();
+        // }
+      }
+      
+    });
+
     // piano.disableMusicalTyping();
     piano.keyDown = (keyNumber) => {
       console.log("key down", keyNumber);

@@ -1,6 +1,7 @@
+// Create the piano DOM elements
+
 module.exports = function(document) {
 
-const pianoUtilities = require('./piano-utilities');
 const pianoClassNames = require('./piano-class-names');
 
 

@@ -1,3 +1,5 @@
+// The class names for the DOM elements
+
 const classNames = {
   pianoKey: 'piano-key',
   whiteKey: 'white-key',

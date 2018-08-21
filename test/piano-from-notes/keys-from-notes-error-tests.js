@@ -3,8 +3,9 @@ const expect = chai.expect;
 
 let document = {};
 
-const pianoBuilder = require('../../piano/src/piano-builder')(document);
-const PianoBuildError = require('../../piano/src/piano-build-error');
+const pianoDOM = require('../../piano/src/piano-DOM')(document || window.document);
+const pianoBuilder = require('../../piano/src/build/piano-builder')(pianoDOM);
+const PianoBuildError = require('../../piano/src/build/piano-build-error');
 
 function throwableFunction() {
   const functionThatThrows = arguments[0].bind(this);
