@@ -54,9 +54,9 @@ exports.buildPianoWithWhiteKeysAmount = buildPianoWithWhiteKeysAmount;
 
 
 const noteData = {
-  whiteToBlackKeyMap: {'c':'c#', 'd': 'd#', 'f': 'f#', 'g': 'g#', 'a': 'a#'},
-  nextKeyMap: {'c':'c#', 'c#': 'd', 'd': 'd#', 'd#': 'e', 'e': 'f', 'f': 'f#', 'f#': 'g', 'g': 'g#', 'g#': 'a', 'a': 'a#', 'a#' : 'b', 'b': 'c'},
-  blackNotes: ['c#', 'd#', 'f#', 'g#','a#'],
+  whiteToBlackKeyMap: {'c':'c+', 'd': 'd+', 'f': 'f+', 'g': 'g+', 'a': 'a+'},
+  nextKeyMap: {'c':'c+', 'c+': 'd', 'd': 'd+', 'd+': 'e', 'e': 'f', 'f': 'f+', 'f+': 'g', 'g': 'g+', 'g+': 'a', 'a': 'a+', 'a+' : 'b', 'b': 'c'},
+  blackNotes: ['c+', 'd+', 'f+', 'g+','a+'],
   whiteNotes: ['c', 'd', 'e', 'f', 'g', 'a', 'b'],
   octaves: [0,1,2,3,4,5,6,7,8]
 };
