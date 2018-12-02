@@ -104,7 +104,7 @@ describe("piano", function() {
       context("given start note is sharp", () => {
         it("should throw an error", () => {
           const noteData1 = {
-            note: "c+",
+            note: "c-sh",
             octave: 1
           };
           const noteData2 = {
@@ -121,7 +121,7 @@ describe("piano", function() {
             octave: 1
           };
           const noteData2 = {
-            note: "c+",
+            note: "c-sh",
             octave: 1
           };
           expect(buildPianoWithNotes(noteData1, noteData2)).to.throw(PianoBuildError);
